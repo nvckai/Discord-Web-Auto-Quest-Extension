@@ -8,7 +8,7 @@ Original Source from [**aamiaa**](https://gist.github.com/aamiaa/204cd9d42013ded
 
 
 > [!NOTE]
-> Discord Multi Quest Completer is now **ready-to-use**!
+> Join Discord ID Server Support: https://discord.my.id
 
 ## What it does
 
