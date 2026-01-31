@@ -4,8 +4,7 @@
 
 **This is a specialized Loader Extension.**
 
-It does not contain the core logic locally. Instead, it dynamically fetches and runs the latest script directly from the main repository branch:
-?? **[https://github.com/nvckai/Discord-Web-Auto-Quest-Extension/tree/main](https://github.com/nvckai/Discord-Web-Auto-Quest-Extension/tree/main)**
+It does not contain the core logic locally. Instead, it dynamically fetches and runs the latest script directly from the main repository branch: **[https://github.com/nvckai/Discord-Web-Auto-Quest-Extension/tree/main](https://github.com/nvckai/Discord-Web-Auto-Quest-Extension/tree/main)**
 
 This ensures you always use the latest version without needing to update the extension manually repeatedly.
 
