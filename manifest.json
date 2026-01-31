@@ -1,8 +1,9 @@
 {
   "manifest_version": 3,
-  "name": "Discord Web Auto Quest Extension",
-  "version": "1.2.3",
-  "description": "Automatically complete Discord quests in the browser sequentially without any manual work",
+  "name": "Discord Auto Quest Loader",
+  "version": "1.0.0",
+  "version_name": "1.0.0-loader",
+  "description": "Dynamic loader for Discord Web Auto Quest. Automatically fetches and runs the latest script version from GitHub.",
   "icons": {
     "16": "assets/icon.png",
     "48": "assets/icon.png",
@@ -14,7 +15,8 @@
     "activeTab"
   ],
   "host_permissions": [
-    "https://discord.com/*"
+    "https://discord.com/*",
+    "https://raw.githubusercontent.com/*"
   ],
   "background": {
     "service_worker": "background.js"
@@ -28,8 +30,7 @@
     {
       "matches": ["https://discord.com/*"],
       "js": ["user-agent-override.js"],
-      "run_at": "document_start",
-      "world": "MAIN"
+      "run_at": "document_start"
     }
   ],
   "declarative_net_request": {

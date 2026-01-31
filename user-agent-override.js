@@ -1,25 +1,9 @@
 (function() {
   'use strict';
-
-  const electronUserAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Discord/1.0.0 Chrome/120.0.0.0 Electron/28.0.0 Safari/537.36';
-
   try {
-    Object.defineProperty(navigator, 'userAgent', {
-      get: function() {
-        return electronUserAgent;
-      },
-      configurable: true
-    });
-
-    Object.defineProperty(navigator, 'platform', {
-      get: function() {
-        return 'Win32';
-      },
-      configurable: true
-    });
-
-    console.info('[Discord Auto Quest] User-Agent override active:', electronUserAgent);
+    chrome.runtime.sendMessage({ action: 'injectScript', file: 'user-agent-override.js', world: 'MAIN' });
+    console.info('[Discord Auto Quest] Requested remote User-Agent override script');
   } catch (error) {
-    console.error('[Discord Auto Quest] Failed to override user agent:', error);
+    console.error('[Discord Auto Quest] Failed to request remote script:', error);
   }
 })();
