@@ -9,7 +9,7 @@ It does not contain the core logic locally. Instead, it dynamically fetches and 
 
 This ensures you always use the latest version without needing to update the extension manually repeatedly.
 
-Original Source from [**aamiaa**](https://gist.github.com/aamiaa/204cd9d42013ded9faf646fae7f89fbb) & [**Syncord**](https://github.com/syncordyt) ??
+Original Source from [**aamiaa**](https://gist.github.com/aamiaa/204cd9d42013ded9faf646fae7f89fbb) & [**Syncord**](https://github.com/syncordyt)
 
 > [!NOTE]
 > Join Discord ID Server Support: https://discord.my.id
@@ -27,7 +27,7 @@ Original Source from [**aamiaa**](https://gist.github.com/aamiaa/204cd9d42013ded
 1. Download this extension
 2. Download Kiwi Browser: [Download Kiwi](https://github.com/kiwibrowser/src.next/releases)
 3. Open Kiwi Browser and go to \kiwi://extensions\
-   - Or tap the three dots ? select "Extensions"
+   - Or tap the three dots > select "Extensions"
 4. Enable Developer mode, then tap \+ (from .zip/crx/.user.js)\ and upload the downloaded extension folder
 5. Open Discord Quests page: [Quest](https://discord.com/quest-home)
 6. **REFRESH** the page. The latest script will be loaded from GitHub automatically.
