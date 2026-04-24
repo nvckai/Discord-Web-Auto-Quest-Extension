@@ -10,7 +10,7 @@ Discord Web Auto Quest Extension ("the Extension") is a browser extension that a
 
 **The Extension does not collect, store, or transmit any user data.**
 
-The Extension operates entirely locally within your browser and does not:
+The Extension operates entirely locally within your browser and ***does not***:
 
 - Collect personally identifiable information (name, address, email, age, identification numbers)
 - Collect health information
@@ -46,7 +46,7 @@ The Extension requires the following permissions:
 - **ActiveTab Permission**: Required to obtain the tab ID of the currently active Discord tab so the background service worker can target the correct tab for script injection
 - **DeclarativeNetRequestWithHostAccess**: Required to modify the User-Agent HTTP request header for all requests to discord.com to emulate the Discord Electron desktop client
 
-These permissions are used solely for the Extension's core quest automation functionality and are not used to collect or transmit any user data.
+These permissions are used solely for the Extension's core quest automation functionality and are ***not used to collect or transmit any user data***.
 
 ## Third-Party Services
 
@@ -54,11 +54,11 @@ The Extension does not integrate with any third-party services, analytics platfo
 
 ## Data Sharing
 
-The Extension does not share any data with third parties because it does not collect any data.
+The Extension does not share any data with third parties because it does **NOT** collect any data.
 
 ## User Rights
 
-Since the Extension does not collect any user data, there is no user data to access, modify, or delete. Users can uninstall the Extension at any time through their browser's extension management interface.
+Since the Extension ***does not collect any user data***, there is no user data to access, modify, or delete. Users can uninstall the Extension at any time through their browser's extension management interface.
 
 ## Changes to This Privacy Policy
 
@@ -78,4 +78,5 @@ This Extension complies with:
 
 ---
 
-**Summary:** This Extension does not collect, store, or transmit any user data. All functionality operates locally within your browser and only interacts with Discord's own services.
+**Summary:** This Extension **does NOT collect, store, or transmit any user data***. All functionality operates **locally** within your browser and only interacts with Discord's own services.
+

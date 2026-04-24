@@ -1,4 +1,4 @@
-# Discord Web Auto Quest Extension
+<img width="1854" height="903" alt="image" src="https://github.com/user-attachments/assets/386984b1-8ab7-4899-bd26-3a7aa146f39f" /># Discord Web Auto Quest Extension
 
 <img align="right" src="./assets/icon.png" width=200 alt="Discord Auto Quest Extension logo">
 
@@ -37,9 +37,9 @@ The extension spoofs your user-agent to make Discord think you're using the desk
 ## Installation
 
 1. Clone or download this repo
-2. Open Chrome/Edge and go to `chrome://extensions/`
+2. Open Chrome/Edge and go to `chrome://extensions/` or if you're on Opera go to `opera://extensions`
 3. Toggle "Developer mode" on (top right corner)
-4. Click "Load unpacked" and select the extension folder
+4. Click "Load unpacked" and select the extension folder (the folder with `_metadata` and `assets` folders)
 5. You're done!
 
 ## How to use
@@ -75,7 +75,7 @@ For streaming quests, you still need at least one other person in the voice chan
 **Button doesn't appear:**
 - Make sure you're on `discord.com/quest-home`
 - Refresh the page
-- Check that the extension is enabled in `chrome://extensions/`
+- Check that the extension is enabled in `chrome://extensions/` or `opera://extensions`
 
 **Quest not completing:**
 - Open the console (F12) and check for error messages
