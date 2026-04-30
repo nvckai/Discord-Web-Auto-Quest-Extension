@@ -88,21 +88,23 @@
         completed: state.completed
       })));
 
-      for (const state of questStates) {
-        if (state.completed) continue;
+      await Promise.all(
+        questStates
+          .filter(state => !state.completed)
+          .map(state => (async () => {
+            while (!state.completed) {
+              const isVideo = state.taskType.startsWith("WATCH_VIDEO");
 
-        while (!state.completed) {
-          const isVideo = state.taskType.startsWith("WATCH_VIDEO");
-
-          if (isVideo) {
-            await processVideoStep(state, stores.api);
-            if (!state.completed) await new Promise(r => setTimeout(r, 1000 + (Math.random() * 500)));
-          } else {
-            await processHeartbeatStep(state, stores);
-            if (!state.completed) await new Promise(r => setTimeout(r, 20000 + (Math.random() * 2000)));
-          }
-        }
-      }
+              if (isVideo) {
+                await processVideoStep(state, stores.api);
+                if (!state.completed) await new Promise(r => setTimeout(r, 1000 + (Math.random() * 500)));
+              } else {
+                await processHeartbeatStep(state, stores);
+                if (!state.completed) await new Promise(r => setTimeout(r, 20000 + (Math.random() * 2000)));
+              }
+            }
+          })())
+      );
     } catch (error) {}
   }
 

@@ -24,6 +24,17 @@ Original Source from [**aamiaa**](https://gist.github.com/aamiaa/204cd9d42013ded
 > 
 > Use the script at your own risk.
 
+> [!TIP]  
+> **Faster Quest Processing with Parallel Execution**  
+>  
+> **Before:**  
+> Quests ran one by one using `await`, so each had to finish before the next started.  
+> - 3 quests × 15 minutes = **45 minutes total**  
+>  
+> **After:**  
+> All quests run together using `Promise.all`. While one waits, others keep progressing.  
+> - 3 quests ≈ **15 minutes total**  
+
 ## What it does
 
 This extension hooks into Discord's quest system and automatically completes the requirements for all active quests sequentially. It works with:
