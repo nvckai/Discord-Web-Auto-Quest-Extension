@@ -86,12 +86,12 @@
 
   function postMessage(type, data) {
     try {
-      window.postMessage({ prefix: 'DISCORD_QUEST_COMPLETER', type: type, data: data }, '*');
+      window.dispatchEvent(new CustomEvent('DISCORD_QUEST_COMPLETER', { detail: { type: type, data: data } }));
     } catch (e) {}
   }
 
   function getActiveQuests(QuestsStore) {
-    var supportedTasks = ['WATCH_VIDEO', 'PLAY_ON_DESKTOP', 'STREAM_ON_DESKTOP', 'PLAY_ACTIVITY', 'WATCH_VIDEO_ON_MOBILE'];
+    var supportedTasks = ['WATCH_VIDEO', 'PLAY_ON_DESKTOP', 'PLAY_ON_DESKTOP_V2', 'STREAM_ON_DESKTOP', 'PLAY_ACTIVITY', 'WATCH_VIDEO_ON_MOBILE'];
     var now = Date.now();
     var result = [];
     var quests = QuestsStore.quests;
@@ -126,7 +126,7 @@
 
   function initQuestState(quest) {
     var cfg = quest.config.taskConfig || quest.config.taskConfigV2;
-    var supportedTasks = ['WATCH_VIDEO', 'PLAY_ON_DESKTOP', 'STREAM_ON_DESKTOP', 'PLAY_ACTIVITY', 'WATCH_VIDEO_ON_MOBILE'];
+    var supportedTasks = ['WATCH_VIDEO', 'PLAY_ON_DESKTOP', 'PLAY_ON_DESKTOP_V2', 'STREAM_ON_DESKTOP', 'PLAY_ACTIVITY', 'WATCH_VIDEO_ON_MOBILE'];
     var taskType = null;
 
     for (var i = 0; i < supportedTasks.length; i++) {
@@ -204,32 +204,40 @@
 
   async function processHeartbeat(quest, taskType, target, progress, api, channelStore, guildChannelStore, currentUserId, notify) {
     var current = progress;
+    var isActivity = taskType === 'PLAY_ACTIVITY';
+    var streamKey;
 
-    var channelId = null;
-    try {
-      if (channelStore && typeof channelStore.getSortedPrivateChannels === 'function') {
-        var priv = channelStore.getSortedPrivateChannels();
-        if (priv && priv[0]) channelId = priv[0].id;
-      }
-    } catch (e) {}
-
-    if (!channelId && guildChannelStore) {
+    if (isActivity) {
+      var appId = quest.config && quest.config.application && quest.config.application.id;
+      var suffix = currentUserId || quest.id || Math.floor(Math.random() * 99999);
+      streamKey = appId ? appId + ':' + suffix : 'activity:' + quest.id + ':' + suffix;
+    } else {
+      var channelId = null;
       try {
-        var allGuilds = guildChannelStore.getAllGuilds ? guildChannelStore.getAllGuilds() : {};
-        var guilds = Object.values(allGuilds);
-        for (var i = 0; i < guilds.length; i++) {
-          if (guilds[i] && guilds[i].VOCAL && guilds[i].VOCAL.length > 0) {
-            channelId = guilds[i].VOCAL[0].channel.id;
-            break;
-          }
+        if (channelStore && typeof channelStore.getSortedPrivateChannels === 'function') {
+          var priv = channelStore.getSortedPrivateChannels();
+          if (priv && priv[0]) channelId = priv[0].id;
         }
       } catch (e) {}
-    }
 
-    var suffix = currentUserId || Math.floor(Math.random() * 99999);
-    var streamKey = channelId
-      ? 'call:' + channelId + ':' + suffix
-      : 'call:' + quest.id + ':' + suffix;
+      if (!channelId && guildChannelStore) {
+        try {
+          var allGuilds = guildChannelStore.getAllGuilds ? guildChannelStore.getAllGuilds() : {};
+          var guilds = Object.values(allGuilds);
+          for (var i = 0; i < guilds.length; i++) {
+            if (guilds[i] && guilds[i].VOCAL && guilds[i].VOCAL.length > 0) {
+              channelId = guilds[i].VOCAL[0].channel.id;
+              break;
+            }
+          }
+        } catch (e) {}
+      }
+
+      var suffix = currentUserId || Math.floor(Math.random() * 99999);
+      streamKey = channelId
+        ? 'call:' + channelId + ':' + suffix
+        : 'call:' + quest.id + ':' + suffix;
+    }
 
     var retries = 0;
 
@@ -271,7 +279,9 @@
         await sleep(jitter(retries * 10000, 5000));
       }
 
-      var baseDelay = taskType && taskType.startsWith('WATCH_VIDEO') ? 5000 : 30000;
+      var baseDelay = 30000;
+      if (taskType && taskType.startsWith('WATCH_VIDEO')) baseDelay = 5000;
+      else if (taskType === 'PLAY_ACTIVITY') baseDelay = 15000;
       await sleep(jitter(baseDelay, 15000));
     }
   }

@@ -155,10 +155,9 @@
     document.body.appendChild(panel);
   }
 
-  window.addEventListener('message', function(_ref) {
-    if (_ref.source !== window || !_ref.data) return;
-    var data = _ref.data;
-    if (data.prefix !== 'DISCORD_QUEST_COMPLETER') return;
+  window.addEventListener('DISCORD_QUEST_COMPLETER', function(e) {
+    var data = e.detail;
+    if (!data) return;
 
     var listContainer = document.getElementById('DiscordQuestList');
 

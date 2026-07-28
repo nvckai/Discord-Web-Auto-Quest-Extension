@@ -13,7 +13,7 @@
       ]
     },
     "condition": {
-      "urlFilter": "*discord.com/*",
+      "regexFilter": "^https:\\/\\/discord\\.com\\/api\\/v\\d+\\/quests\\/\\d+\\/(heartbeat|video-progress)",
       "resourceTypes": ["xmlhttprequest"]
     }
   }
