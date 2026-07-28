@@ -24,12 +24,6 @@
       "matches": ["https://discord.com/*", "https://canary.discord.com/*"],
       "js": ["quest-home.js"],
       "run_at": "document_idle"
-    },
-    {
-      "matches": ["https://discord.com/*", "https://canary.discord.com/*"],
-      "js": ["user-agent-override.js"],
-      "run_at": "document_start",
-      "world": "MAIN"
     }
   ],
   "declarative_net_request": {

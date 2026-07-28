@@ -1,36 +1,39 @@
-chrome.runtime.onInstalled.addListener(() => {
-  console.info('Discord Auto Quest extension installed');
+chrome.runtime.onInstalled.addListener(function() {
+  console.info('[Discord Auto Quest] installed');
 });
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if (request.action === 'getVersion') {
-    const manifest = chrome.runtime.getManifest();
-    sendResponse({ version: manifest.version });
+    sendResponse({ version: chrome.runtime.getManifest().version });
     return false;
-  } else if (request.action === 'executeQuestCode') {
-    if (sender.tab && sender.tab.id) {
-      const manifest = chrome.runtime.getManifest();
-      chrome.scripting.executeScript({
-        target: { tabId: sender.tab.id },
-        func: (version) => { window.__QUEST_VERSION = version; },
-        args: [manifest.version],
-        world: 'MAIN'
-      }).then(() => {
-        return chrome.scripting.executeScript({
-          target: { tabId: sender.tab.id },
-          files: ['quest-code.js'],
-          world: 'MAIN'
-        });
-      }).then(() => {
-        sendResponse({ success: true });
-      }).catch((error) => {
-        console.error('Error injecting quest code:', error);
-        sendResponse({ success: false, error: error.message });
-      });
-      return true;
-    } else {
-      sendResponse({ success: false, error: 'No tab ID found' });
+  }
+
+  if (request.action === 'executeQuestCode') {
+    if (!sender.tab || !sender.tab.id) {
+      sendResponse({ success: false, error: 'No tab ID' });
       return false;
     }
+
+    var manifest = chrome.runtime.getManifest();
+
+    chrome.scripting.executeScript({
+      target: { tabId: sender.tab.id },
+      func: function(v) { window.__QUEST_VERSION = v; },
+      args: [manifest.version],
+      world: 'MAIN'
+    }).then(function() {
+      return chrome.scripting.executeScript({
+        target: { tabId: sender.tab.id },
+        files: ['quest-code.js'],
+        world: 'MAIN'
+      });
+    }).then(function() {
+      sendResponse({ success: true });
+    }).catch(function(error) {
+      console.error('[Discord Auto Quest] injection failed:', error.message);
+      sendResponse({ success: false, error: error.message });
+    });
+
+    return true;
   }
 });
